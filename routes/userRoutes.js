@@ -25,11 +25,8 @@ router.get("/", validateJWT, getAllUser);
 
 router.patch("/update/:id", validateJWT, updateUser);
 router.post("/login", loginUser);
-
-router.get("/", validateJWT, getAllUser);
 router.delete("/delete/:id", validateJWT, deleteUser);
 router.post("/send-otp", sendOTP);
-router.post("/login-otp", loginWithOTP);
 router.post("/login-otp", validateOTP, loginWithOTP)
 
 
