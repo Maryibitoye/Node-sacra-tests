@@ -1,11 +1,36 @@
 import express from "express";
-import db from "../db/conn.js";
-const userRoute = express.Router();
+import {
+  createUser,
+  getAllUser,
+  getSingleUser,
+  loginUser,
+  updateUser,
+  sendOTP,
+  deleteUser,
+  loginWithOTP,
 
-userRoute.get("/", async (req, res) => {
-  const collection = db.collection("users");
-  const result = await collection.find({}).limit(10).toArray();
-  res.status(200).json(result);
-});
+} from "../controller/userController.js";
+import { validateJWT } from "../middlewares/validateJWT.js";
+import validateOTP from "../middlewares/validateOTP.js";
 
-export default userRoute;
+const router = express.Router();
+
+// router.get("/", (req, res) => {
+//   res.status(200).send("holla");
+// });
+router.post("/create", createUser);
+
+router.get("/:id", validateJWT, getSingleUser);
+router.get("/", validateJWT, getAllUser);
+
+router.patch("/update/:id", validateJWT, updateUser);
+router.post("/login", loginUser);
+
+router.get("/", validateJWT, getAllUser);
+router.delete("/delete/:id", validateJWT, deleteUser);
+router.post("/send-otp", sendOTP);
+router.post("/login-otp", loginWithOTP);
+router.post("/login-otp", validateOTP, loginWithOTP)
+
+
+export default router;
