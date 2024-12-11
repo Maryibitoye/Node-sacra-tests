@@ -1,4 +1,5 @@
 import express from "express";
+import dbConnection from "./db/conn.js";
 import userRoute from "./routes/userRoutes.js";
 import dbConnection from "./db/conn.js";
 
